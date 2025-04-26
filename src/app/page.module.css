@@ -1,8 +1,10 @@
 .wrapper {
-  background-color: rgb(163, 211, 165);
+  background-color: #61443a;
+  color: white;
   height: 760px;
   width: 400px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
