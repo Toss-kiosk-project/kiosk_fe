@@ -1,5 +1,3 @@
-"use client";
-import { useRouter } from "next/navigation";
 import style from "./style.module.css";
 import Place_Button from "./place_button";
 
