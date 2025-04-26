@@ -1,0 +1,21 @@
+.wrapper {
+  padding: 20px;
+}
+
+.button_wrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.button {
+  background-color: #4caf50;
+  color: white;
+  height: 200px;
+  width: 140px;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+}

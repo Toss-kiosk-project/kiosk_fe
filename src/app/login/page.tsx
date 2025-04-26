@@ -9,16 +9,26 @@ export default function Login() {
   };
   return (
     <div className={style.wrapper}>
-      <form className="form-wrapper">
-        <label>아이디</label>
-        <input type="text" name="username" />
-        <br />
-        <label>비밀번호</label>
-        <input type="password" name="password" />
-        <br />
-        <button type="button">취소</button>
-        <button type="button">로그인</button>
-        <button type="button" onClick={handleClientLogin}>
+      <form>
+        <div className={style.form_wrapper}>
+          <div>
+            <label>아이디</label>
+            <input className={style.input} type="text" name="username" />
+          </div>
+          <div>
+            <label>비밀번호</label>
+            <input className={style.input} type="password" name="password" />
+          </div>
+        </div>
+        <div className={style.button_wrapper}>
+          <button className={style.cancel} type="button">
+            취소
+          </button>
+          <button className={style.submit} type="button">
+            로그인
+          </button>
+        </div>
+        <button className={style.google} type="button" onClick={handleClientLogin}>
           구글 로그인
         </button>
       </form>
