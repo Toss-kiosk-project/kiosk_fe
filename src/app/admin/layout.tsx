@@ -1,4 +1,7 @@
+"use client";
+
 import styles from "./admin-layout.module.css";
+import Sidebar from "./components/Sidebar";
 
 export default function RootLayout({
   children,
@@ -8,12 +11,9 @@ export default function RootLayout({
   return (
     <div className={styles.wrapper}>
       <div className={styles.title}>키오스크 관리자 화면</div>
+
       <div className={styles.layoutContainer}>
-        <div className={styles.sidebar}>
-          <div className={styles.menuItem}>회원관리</div>
-          <div className={styles.menuItem}>상품관리</div>
-          <div className={styles.menuItem}>주문관리</div>
-        </div>
+        <Sidebar />
         {children}
       </div>
     </div>
