@@ -1,6 +1,5 @@
 import Menu_Footer from "./menu_footer";
 import Menu_Header from "./menu_header";
-import style from "./style.module.css";
 
 export default function MenuLayout({
   children,
