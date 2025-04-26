@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 const Menu_Footer = () => {
   const router = useRouter();
   const handleSubmit = () => {
-    router.push("/client/check-order");
+    router.push("/client/cart");
   };
   const handelCancel = () => {
     router.push("/");
