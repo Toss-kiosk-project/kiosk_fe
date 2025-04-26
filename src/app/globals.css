@@ -18,7 +18,7 @@ body {
   height: 760px;
   background-color: white;
   position: relative;
-  overflow: visible;
+  overflow: hidden;
 }
 
 * {
