@@ -9,6 +9,9 @@ export default function Login() {
   const handleClientLogin = () => {
     router.push("/client/menu");
   };
+  const handleOtherLogin = () => {
+    router.push("/login/other-login");
+  };
   return (
     <div className={style.wrapper}>
       <Image src={Logo} alt="logo" width={200} height={200} />
@@ -16,7 +19,9 @@ export default function Login() {
       <button className={style.big_button} type="button" onClick={handleClientLogin}>
         구글 로그인
       </button>
-      <button className={style.big_button}>다른 방법으로 로그인</button>
+      <button className={style.big_button} type="button" onClick={handleOtherLogin}>
+        다른 방법으로 로그인
+      </button>
     </div>
   );
 }
