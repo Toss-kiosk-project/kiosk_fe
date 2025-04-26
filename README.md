@@ -1,5 +1,5 @@
 ## ☕️ 키오스크
-- 한 줄 소개 : 월급 쪼개기 자동화 & Money Flow 시각화 서비스
+- 한 줄 소개 : 카페(메머드커피) 컨셉의 키오스크
 - 프로젝트 목적 : 한경xTossBank 백엔드 미니 프로젝트
 - 💾 FE 저장소 : https://github.com/Toss-kiosk-project/kiosk_fe
 - 💾 BE 저장소 : 
