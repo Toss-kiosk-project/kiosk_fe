@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 export default function Login() {
   const router = useRouter();
   const handleClientLogin = () => {
-    router.push("/menu");
+    router.push("/client/place");
   };
   return (
     <div className={style.wrapper}>
