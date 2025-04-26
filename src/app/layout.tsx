@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="mobile-view">{children}</div>
+        <div>{children}</div>
       </body>
     </html>
   );
