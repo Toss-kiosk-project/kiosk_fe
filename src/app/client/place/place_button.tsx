@@ -8,7 +8,7 @@ interface buttonProps {
 const Place_Button = ({ place }: buttonProps) => {
   const router = useRouter();
   const handleClick = () => {
-    router.push("/client/menu");
+    router.push("/client/payment");
   };
 
   return (
