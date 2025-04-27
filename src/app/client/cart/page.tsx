@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import style from "./style.module.css";
 
 export default function Cart() {
   const router = useRouter();
@@ -10,12 +11,23 @@ export default function Cart() {
     router.push("/client/place");
   };
   return (
-    <div>
+    <div className={style.wrapper}>
       <h1>주문을 확인하세요.</h1>
-      <div>주문 목록</div>
-      <div>
-        <button onClick={handleAdd}>추가 주문</button>
-        <button onClick={handleClick}>결제하기</button>
+      <div className={style.cart_wrapper}>
+        <div>주문 목록</div>
+        <div className={style.total}>
+          <p>총 수량 : n개</p>
+          <p>총 가격 : 000원</p>
+        </div>
+
+        <div className={style.btn_wrapper}>
+          <button type="button" onClick={handleAdd} className={style.add_btn}>
+            추가 주문
+          </button>
+          <button type="button" onClick={handleClick} className={style.order_btn}>
+            결제하기
+          </button>
+        </div>
       </div>
     </div>
   );
