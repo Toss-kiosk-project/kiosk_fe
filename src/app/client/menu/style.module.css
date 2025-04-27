@@ -43,7 +43,7 @@
   align-items: center;
   width: 400px;
   height: 150px;
-  background-color: rgb(163, 211, 165);
+  background-color: #dfcdbf;
   position: absolute;
   bottom: 0;
 }
@@ -58,16 +58,22 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 320px;
+  width: 350px;
 }
 
-.button {
-  background-color: #4caf50;
+.button,
+.cancel_button {
+  background-color: #61443a;
   color: white;
-  height: 40px;
-  width: 140px;
+  height: 44px;
+  width: 160px;
   border: none;
   border-radius: 10px;
   font-size: 16px;
   margin: 10px 0;
+  font-weight: bold;
+}
+
+.cancel_button {
+  background-color: rgb(206, 29, 88);
 }

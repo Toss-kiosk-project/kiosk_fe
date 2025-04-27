@@ -11,10 +11,10 @@ export default function Loading() {
     >
       <div
         style={{
-          width: "40px",
-          height: "40px",
-          border: "5px solid #99c3a1",
-          borderTop: "5px solid #4d8a66",
+          width: "50px",
+          height: "50px",
+          border: "6px solid #dfcdbf",
+          borderTop: "6px solid #61443a",
           borderRadius: "50%",
           animation: "spin 1s linear infinite",
         }}
