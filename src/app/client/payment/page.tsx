@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import style from "./style.module.css";
 
 export default function Payment() {
   const router = useRouter();
@@ -10,12 +11,18 @@ export default function Payment() {
     router.push("/client/complete");
   };
   return (
-    <div>
+    <div className={style.wrapper}>
       <h1>결제</h1>
-      <div>카드를 화살표 방향으로 투입구에 넣어주세요.</div>
-      <div>
-        <button onClick={handleCancel}>취소하기</button>
-        <button onClick={handleComplete}>결제 완료</button>
+      <div className={style.pay_wrapper}>
+        <div>카드를 화살표 방향으로 투입구에 넣어주세요.</div>
+        <div className={style.btn_wrapper}>
+          <button type="button" onClick={handleCancel} className={style.cancel_btn}>
+            취소하기
+          </button>
+          <button type="button" onClick={handleComplete} className={style.order_btn}>
+            결제 완료
+          </button>
+        </div>
       </div>
     </div>
   );
