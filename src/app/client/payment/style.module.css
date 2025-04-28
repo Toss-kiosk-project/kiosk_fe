@@ -15,32 +15,41 @@
   justify-content: center;
   align-items: center;
   width: 350px;
-  height: 400px;
-  background-color: white;
+  height: 450px;
+  background-color: #f0e9e4;
   color: black;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+
+.text_center {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .btn_wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 300px;
+  width: 320px;
+  margin-top: 40px;
 }
 
 .cancel_btn,
 .order_btn {
   color: white;
-  height: 40px;
-  width: 140px;
+  height: 44px;
+  width: 150px;
   border: none;
   border-radius: 10px;
-  font-size: 16px;
+  font-size: 18px;
   margin: 10px 0;
   font-weight: bold;
 }
 
 .cancel_btn {
-  background-color: rgb(206, 29, 88);
+  background-color: rgb(207, 75, 119);
 }
 
 .order_btn {
