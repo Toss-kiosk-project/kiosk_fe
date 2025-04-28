@@ -36,6 +36,10 @@
   padding-top: 20px;
 }
 
+.section {
+  padding: 20px;
+}
+
 .active {
   color: #61443a;
 }

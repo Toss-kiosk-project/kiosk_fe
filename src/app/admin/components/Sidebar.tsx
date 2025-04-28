@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import styles from "../admin-layout.module.css";
 
 interface SidebarItemProps {
@@ -23,9 +22,12 @@ const SidebarItem = ({ item, isActive, onClick }: SidebarItemProps) => (
   </div>
 );
 
-const Sidebar = () => {
-  const [sideNum, setSideNum] = useState(0);
+interface SidebarProps {
+  sideNum: number;
+  setSideNum: (newSideNum: number) => void;
+}
 
+const Sidebar = ({ sideNum, setSideNum }: SidebarProps) => {
   const handleClickSidebar = (newSideNum: number) => {
     setSideNum(newSideNum);
   };
