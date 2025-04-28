@@ -1,37 +1,28 @@
 "use client";
 import { useRouter } from "next/navigation";
 import style from "./style.module.css";
+import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
+import { RootState } from "@/redux/store";
+import { addItem, increaseQuantity, decreaseQuantity, removeItem } from "@/redux/orderSlice";
 
 export default function Cart() {
-  const [orderList, setOrderList] = useState([
-    { name: "아메리카노", price: 3000, quantity: 1 },
-    { name: "카페라떼", price: 3500, quantity: 1 },
-    { name: "바닐라라떼", price: 4000, quantity: 1 },
-    { name: "딸기라떼", price: 4500, quantity: 1 },
-    { name: "초코라떼", price: 4500, quantity: 1 },
-  ]);
+  const dispatch = useDispatch();
+  const orderList = useSelector((state: RootState) => state.order.list);
+
   const totalQuantity = orderList.reduce((acc, item) => acc + item.quantity, 0);
   const totalPrice = orderList.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   const handleIncrease = (index: number) => {
-    const updatedList = [...orderList];
-    updatedList[index].quantity += 1;
-    setOrderList(updatedList);
+    dispatch(increaseQuantity(index));
   };
 
   const handleDecrease = (index: number) => {
-    const updatedList = [...orderList];
-    if (updatedList[index].quantity > 1) {
-      updatedList[index].quantity -= 1;
-      setOrderList(updatedList);
-    }
+    dispatch(decreaseQuantity(index));
   };
 
   const handleDelete = (index: number) => {
-    const updatedList = [...orderList];
-    updatedList.splice(index, 1); // index 번째 아이템을 1개 삭제
-    setOrderList(updatedList);
+    dispatch(removeItem(index));
   };
 
   const router = useRouter();
