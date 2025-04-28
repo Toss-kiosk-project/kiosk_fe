@@ -18,12 +18,17 @@
 }
 
 .button {
-  background-color: white;
+  background-color: #f0e9e4;
   color: black;
-  height: 200px;
-  width: 140px;
+  height: 230px;
+  width: 150px;
   border: none;
   border-radius: 10px;
-  font-size: 18px;
+  font-size: 20px;
   margin-bottom: 70px;
+  font-weight: bold;
+}
+
+.image_wrapper {
+  margin-bottom: 10px;
 }
