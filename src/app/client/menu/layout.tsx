@@ -9,7 +9,7 @@ export default function MenuLayout({
   return (
     <div>
       <Menu_Header />
-      <div>{children}</div>
+      {children}
       <Menu_Footer />
     </div>
   );
