@@ -2,9 +2,8 @@
 import { useRouter } from "next/navigation";
 import style from "./style.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
 import { RootState } from "@/redux/store";
-import { addItem, increaseQuantity, decreaseQuantity, removeItem } from "@/redux/orderSlice";
+import { increaseQuantity, decreaseQuantity, removeItem } from "@/redux/orderSlice";
 
 export default function Cart() {
   const dispatch = useDispatch();
@@ -64,7 +63,7 @@ export default function Cart() {
         </div>
         <div className={style.total}>
           <p>총 수량 : {totalQuantity}개</p>
-          <p>총 가격 : {totalPrice.toLocaleString()}원</p>
+          <p className={style.totalprice}>총 가격 : {totalPrice.toLocaleString()}원</p>
         </div>
 
         <div className={style.btn_wrapper}>

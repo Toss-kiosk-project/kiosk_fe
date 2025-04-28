@@ -88,3 +88,10 @@
 .order_btn {
   background-color: #61443a;
 }
+
+.totalprice {
+  color: #61443a;
+  font-weight: bold;
+  font-size: 17px;
+  margin-top: 2px;
+}
