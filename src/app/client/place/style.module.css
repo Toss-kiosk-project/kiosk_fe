@@ -1,21 +1,29 @@
 .wrapper {
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 400px;
+  background-color: #61443a;
+  color: white;
 }
 
 .button_wrapper {
+  width: 340px;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 100%;
   margin-top: 20px;
 }
 
 .button {
-  background-color: #4caf50;
-  color: white;
+  background-color: white;
+  color: black;
   height: 200px;
   width: 140px;
   border: none;
   border-radius: 10px;
   font-size: 18px;
+  margin-bottom: 70px;
 }

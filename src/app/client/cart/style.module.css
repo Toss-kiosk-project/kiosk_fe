@@ -1,0 +1,52 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 400px;
+  background-color: #61443a;
+  color: white;
+}
+.cart_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 350px;
+  height: 400px;
+  background-color: white;
+  color: black;
+}
+
+.total {
+  /* 오른쪽으로 붙은 값 */
+  margin-left: 200px;
+}
+
+.btn_wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 300px;
+}
+
+.add_btn,
+.order_btn {
+  color: white;
+  height: 40px;
+  width: 140px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.add_btn {
+  background-color: rgb(206, 29, 88);
+}
+
+.order_btn {
+  background-color: #61443a;
+}
