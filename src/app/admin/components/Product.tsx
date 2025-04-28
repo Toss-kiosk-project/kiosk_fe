@@ -2,6 +2,7 @@
 
 import React from "react";
 import styles from "./component.module.css";
+import { useRouter } from "next/navigation";
 
 const Product = () => {
   const tableHead = [
@@ -43,10 +44,14 @@ const Product = () => {
       alert("삭제되었습니다.");
     }
   };
+  const router = useRouter();
+  const handleClickUpdateBtn = (id: number) => {
+    router.push(`/admin/product/${id}`);
+  };
 
   return (
     <div>
-      <div className={styles.title}>회원 목록</div>
+      <div className={styles.title}>상품 목록</div>
       <div className={styles.description}>
         총 <span className={styles.highlight}>3</span>개의 상품이 있습니다.
       </div>
@@ -70,7 +75,10 @@ const Product = () => {
               <td className={styles.tableElement}>{data.price}</td>
               <td className={styles.tableElement}>{data.category}</td>
               <td className={styles.tableElement}>
-                <button className={`${styles.button} ${styles.updateBtn}`}>
+                <button
+                  className={`${styles.button} ${styles.updateBtn}`}
+                  onClick={() => handleClickUpdateBtn(data.num)}
+                >
                   수정
                 </button>
               </td>
