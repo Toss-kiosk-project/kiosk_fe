@@ -1,4 +1,5 @@
 "use client";
+import { usePathname, useRouter } from "next/navigation";
 import styles from "../admin-layout.module.css";
 
 interface SidebarItemProps {
@@ -28,7 +29,12 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ sideNum, setSideNum }: SidebarProps) => {
+  const pathName = usePathname();
+  const router = useRouter();
   const handleClickSidebar = (newSideNum: number) => {
+    if (pathName !== "/admin") {
+      router.push("/admin");
+    }
     setSideNum(newSideNum);
   };
 
