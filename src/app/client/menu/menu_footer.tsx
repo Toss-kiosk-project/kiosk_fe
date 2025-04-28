@@ -4,7 +4,7 @@ import style from "./style.module.css";
 import { useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
-import { clearOrder } from "@/redux/orderSlice"; // 주문 초기화 액션
+import { clearOrder, removeItem } from "@/redux/orderSlice"; // 주문 초기화 액션
 
 const Menu_Footer = () => {
   const router = useRouter();
@@ -23,22 +23,31 @@ const Menu_Footer = () => {
     dispatch(clearOrder());
   };
 
+  const handleDelete = (index: number) => {
+    dispatch(removeItem(index));
+  };
+
   return (
     <div className={style.footer_wrapper}>
-      <div>🛒 주문 내역</div>
+      <div style={{ fontSize: "14px", margin: "5px 0" }}>🛒 주문 내역</div>
 
       {/* 주문 리스트 테이블 */}
       <div className={style.order_list}>
         {orderList.length === 0 ? (
-          <p>주문한 항목이 없습니다.</p>
+          <p style={{ margin: "10px", color: "lightgrey" }}>주문하실 메뉴를 선택해주세요.</p>
         ) : (
-          <table style={{ width: "100%", borderCollapse: "collapse", marginTop: "1rem" }}>
+          <table className={style.order_table}>
             <tbody>
               {orderList.map((item, index) => (
-                <tr key={index}>
+                <tr key={index} className={style.order_row}>
                   <td>{item.name}</td>
                   <td>{item.price.toLocaleString()}원</td>
-                  <td>{item.quantity}</td>
+                  <td>{item.quantity}개</td>
+                  <td>
+                    <button type="button" onClick={() => handleDelete(index)} className={style.delete_btn}>
+                      삭제
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
