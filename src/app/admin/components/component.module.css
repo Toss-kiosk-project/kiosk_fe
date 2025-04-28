@@ -42,3 +42,21 @@
 .deleteBtn {
   background-color: tomato;
 }
+
+.input {
+  width: 100%;
+  height: 40px;
+  outline: none;
+  font-size: large;
+}
+
+.buttonWrapper {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  width: 200px;
+  margin: 30px auto;
+}
+.select {
+  height: 40px;
+}

@@ -6,6 +6,7 @@ import Sidebar from "./components/Sidebar";
 import Member from "./components/Member";
 import Product from "./components/Product";
 import Order from "./components/Order";
+import { usePathname } from "next/navigation";
 
 export default function RootLayout({
   children,
@@ -13,6 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [sideNum, setSideNum] = useState(0);
+  const pathName = usePathname();
   const renderComponent = () => {
     switch (sideNum) {
       case 0:
@@ -31,7 +33,10 @@ export default function RootLayout({
       <div className={styles.title}>키오스크 관리자 화면</div>
       <div className={styles.layoutContainer}>
         <Sidebar sideNum={sideNum} setSideNum={setSideNum} />
-        <div className={styles.section}>{renderComponent()}</div>
+
+        <div className={styles.section}>
+          {pathName === "/admin" ? renderComponent() : children}
+        </div>
       </div>
     </div>
   );

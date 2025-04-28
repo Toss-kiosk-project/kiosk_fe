@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import styles from "./component.module.css";
+import { useRouter } from "next/navigation";
 
 const Member = () => {
   const tableHead = [
@@ -36,6 +37,10 @@ const Member = () => {
       alert("삭제되었습니다.");
     }
   };
+  const router = useRouter();
+  const handleClickUpdateBtn = (id: number) => {
+    router.push(`/admin/member/${id}`);
+  };
   return (
     <div>
       <div className={styles.title}>회원 목록</div>
@@ -62,7 +67,10 @@ const Member = () => {
               <td className={styles.tableElement}>{data.role}</td>
               <td className={styles.tableElement}>{data.date}</td>
               <td className={styles.tableElement}>
-                <button className={`${styles.button} ${styles.updateBtn}`}>
+                <button
+                  className={`${styles.button} ${styles.updateBtn}`}
+                  onClick={() => handleClickUpdateBtn(data.num)}
+                >
                   수정
                 </button>
               </td>
