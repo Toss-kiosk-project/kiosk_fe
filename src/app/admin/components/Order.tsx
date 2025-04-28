@@ -9,7 +9,6 @@ const Order = () => {
     "주문 총 금액",
     "주문상태",
     "주문일시",
-    "수정",
   ];
 
   const dummyData = [
@@ -28,6 +27,14 @@ const Order = () => {
       orderTime: "2023-01-02 14:00:00",
     },
   ];
+
+  const handleChageStatus = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+    id: number
+  ) => {
+    const selectedValue = e.target.value;
+    console.log(selectedValue);
+  };
   return (
     <div>
       <div className={styles.title}>주문 목록</div>
@@ -50,13 +57,17 @@ const Order = () => {
               <td className={styles.tableElement}>{data.num}</td>
               <td className={styles.tableElement}>{data.orderNum}</td>
               <td className={styles.tableElement}>{data.totalPrice}</td>
-              <td className={styles.tableElement}>{data.status}</td>
-              <td className={styles.tableElement}>{data.orderTime}</td>
               <td className={styles.tableElement}>
-                <button className={`${styles.button} ${styles.updateBtn}`}>
-                  수정
-                </button>
+                <select
+                  className={styles.select}
+                  onChange={(e) => handleChageStatus(e, data.num)}
+                >
+                  <option value="준비중">준비중</option>
+                  <option value="준비완료">준비완료</option>
+                  <option value="수령완료">수령완료</option>
+                </select>
               </td>
+              <td className={styles.tableElement}>{data.orderTime}</td>
             </tr>
           ))}
         </tbody>
