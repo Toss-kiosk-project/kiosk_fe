@@ -1,8 +1,29 @@
 "use client";
 import { useRouter } from "next/navigation";
 import style from "./style.module.css";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/redux/store";
+import { increaseQuantity, decreaseQuantity, removeItem } from "@/redux/orderSlice";
 
 export default function Cart() {
+  const dispatch = useDispatch();
+  const orderList = useSelector((state: RootState) => state.order.list);
+
+  const totalQuantity = orderList.reduce((acc, item) => acc + item.quantity, 0);
+  const totalPrice = orderList.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+  const handleIncrease = (index: number) => {
+    dispatch(increaseQuantity(index));
+  };
+
+  const handleDecrease = (index: number) => {
+    dispatch(decreaseQuantity(index));
+  };
+
+  const handleDelete = (index: number) => {
+    dispatch(removeItem(index));
+  };
+
   const router = useRouter();
   const handleAdd = () => {
     router.push("/client/menu");
@@ -14,10 +35,35 @@ export default function Cart() {
     <div className={style.wrapper}>
       <h1>주문을 확인하세요.</h1>
       <div className={style.cart_wrapper}>
-        <div>주문 목록</div>
+        <div>
+          <table className={style.order_table}>
+            <tbody>
+              {orderList.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.name}</td>
+                  <td>{item.price}원</td>
+                  <td className={style.quantity_cell}>
+                    <button type="button" onClick={() => handleDecrease(index)} className={style.small_btn}>
+                      -
+                    </button>
+                    <span className={style.quantity_text}>{item.quantity}개</span>
+                    <button type="button" onClick={() => handleIncrease(index)} className={style.small_btn}>
+                      +
+                    </button>
+                  </td>
+                  <td>
+                    <button type="button" onClick={() => handleDelete(index)} className={style.delete_btn}>
+                      삭제
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
         <div className={style.total}>
-          <p>총 수량 : n개</p>
-          <p>총 가격 : 000원</p>
+          <p>총 수량 : {totalQuantity}개</p>
+          <p className={style.totalprice}>총 가격 : {totalPrice.toLocaleString()}원</p>
         </div>
 
         <div className={style.btn_wrapper}>
