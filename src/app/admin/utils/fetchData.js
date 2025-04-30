@@ -13,7 +13,6 @@ export const getData = async (url) => {
 
 export const deleteData = async (url, field, id) => {
   try {
-    // console.log(id);
     const response = await fetch(`${baseURL}/${url}`, {
       method: "DELETE",
       headers: {
@@ -43,6 +42,22 @@ export const getDataById = async (url, field, id) => {
 export const updateUser = async (bodyData) => {
   try {
     const response = await fetch(`${baseURL}/user`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(bodyData),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const updateProduct = async (bodyData) => {
+  try {
+    const response = await fetch(`${baseURL}/menu`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
