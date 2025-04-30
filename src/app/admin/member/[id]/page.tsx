@@ -1,24 +1,56 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../components/component.module.css";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import { getDataById, updateUser } from "../../utils/fetchData";
 
 const UpdateMember = () => {
-  const tableHead = [
-    { head: "아이디", isReadOnly: false, type: "text" },
-    { head: "암호", isReadOnly: true, type: "password" },
-    { head: "이름", isReadOnly: false, type: "text" },
-    { head: "가입일", isReadOnly: true, type: "text" },
+  const tableHead: {
+    head: string;
+    isReadOnly: boolean;
+    type: string;
+    name: keyof typeof userData;
+  }[] = [
+    { head: "이메일", isReadOnly: true, type: "text", name: "email" },
+    { head: "이름", isReadOnly: false, type: "text", name: "userName" },
   ];
   const router = useRouter();
   const handleClickCancelBtn = () => {
     router.push("/admin");
   };
 
-  const handleChangeRole = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedValue = e.target.value;
-    console.log(selectedValue);
+  const handleClickUpdateBtn = async () => {
+    const data = {
+      userId: id,
+      userName: userData.userName,
+      role: userData.role === "ADMIN" ? 0 : 1,
+    };
+    const res = await updateUser(data);
+
+    if (res.isSuccess) {
+      alert(res.message);
+      router.push("/admin");
+    } else {
+      alert("회원수정실패");
+    }
   };
+
+  const params = useParams();
+  const id = params.id as string;
+
+  const [userData, setUserData] = useState({
+    email: "",
+    userName: "",
+    role: "",
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getDataById("user", "userId", id);
+      setUserData(res.userInfo);
+    };
+    fetchData();
+  }, []);
   return (
     <div>
       <div className={styles.title}>회원정보 수정</div>
@@ -32,6 +64,13 @@ const UpdateMember = () => {
                   className={styles.input}
                   readOnly={head.isReadOnly}
                   type={head.type}
+                  value={userData[head.name]}
+                  onChange={(e) =>
+                    setUserData((prev) => ({
+                      ...prev,
+                      [head.name]: e.target.value,
+                    }))
+                  }
                 />
               </td>
             </tr>
@@ -39,16 +78,28 @@ const UpdateMember = () => {
           <tr>
             <th className={styles.tableElement}>권한</th>
             <td className={styles.tableElement}>
-              <select className={styles.select} onChange={handleChangeRole}>
-                <option value="admin">ADMIN</option>
-                <option value="user">USER</option>
+              <select
+                className={styles.select}
+                onChange={(e) =>
+                  setUserData((prev) => ({
+                    ...prev,
+                    role: e.target.value,
+                  }))
+                }
+                value={userData.role}
+              >
+                <option value="ADMIN">ADMIN</option>
+                <option value="USER">USER</option>
               </select>
             </td>
           </tr>
         </tbody>
       </table>
       <div className={styles.buttonWrapper}>
-        <button className={`${styles.button} ${styles.updateBtn}`}>
+        <button
+          className={`${styles.button} ${styles.updateBtn}`}
+          onClick={handleClickUpdateBtn}
+        >
           수정하기
         </button>
         <button

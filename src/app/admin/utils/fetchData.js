@@ -26,3 +26,31 @@ export const deleteData = async (url, field, id) => {
     console.error(error);
   }
 };
+
+export const getDataById = async (url, field, id) => {
+  try {
+    const response = await fetch(`${baseURL}/${url}?${field}=${id}`, {
+      method: "GET",
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const updateUser = async (bodyData) => {
+  try {
+    const response = await fetch(`${baseURL}/user`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(bodyData),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
