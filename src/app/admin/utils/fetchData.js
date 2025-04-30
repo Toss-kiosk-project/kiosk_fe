@@ -13,6 +13,7 @@ export const getData = async (url) => {
 
 export const deleteData = async (url, field, id) => {
   try {
+    // console.log(id);
     const response = await fetch(`${baseURL}/${url}`, {
       method: "DELETE",
       headers: {

@@ -44,8 +44,8 @@ const Member = () => {
     <div>
       <div className={styles.title}>회원 목록</div>
       <div className={styles.description}>
-        총 <span className={styles.highlight}>{users.length}</span>명의 회원이
-        있습니다.
+        총 <span className={styles.highlight}>{users.length ?? 0}</span>명의
+        회원이 있습니다.
       </div>
       <table className={`${styles.tableElement} ${styles.table}`}>
         <thead>
