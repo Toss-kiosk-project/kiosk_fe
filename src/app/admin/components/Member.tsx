@@ -1,51 +1,51 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./component.module.css";
 import { useRouter } from "next/navigation";
+import { deleteData, getData } from "../utils/fetchData";
+
+interface UserData {
+  userId: string;
+  email: string;
+  userName: string;
+  role: string;
+}
 
 const Member = () => {
-  const tableHead = [
-    "번호",
-    "아이디",
-    "암호",
-    "이름",
-    "권한",
-    "가입일",
-    "수정",
-    "삭제",
-  ];
-  let dummyData = [
-    {
-      num: 1,
-      id: "홍길동",
-      password: "1234",
-      name: "홍길동",
-      role: "관리자",
-      date: "2023-01-01",
-    },
-    {
-      num: 2,
-      id: "김철수",
-      password: "1234",
-      name: "김철수",
-      role: "회원",
-      date: "2023-01-02",
-    },
-  ];
-  const handleClickDeleteBtn = (id: number) => {
+  const tableHead = ["번호", "아이디", "이름", "권한", "수정", "삭제"];
+
+  const handleClickDeleteBtn = async (id: string) => {
     if (confirm("삭제하시겠습니까?")) {
-      alert("삭제되었습니다.");
+      const res = await deleteData("user", "userId", id);
+      if (res.isSuccess) {
+        alert("삭제되었습니다.");
+        const updatedUsers = await getData("user");
+        setUsers(updatedUsers.userList);
+      } else {
+        alert("삭제에 실패했습니다.");
+      }
     }
   };
   const router = useRouter();
-  const handleClickUpdateBtn = (id: number) => {
+  const handleClickUpdateBtn = (id: string) => {
     router.push(`/admin/member/${id}`);
   };
+
+  const [users, setUsers] = useState<UserData[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getData("user");
+      setUsers(res.userList);
+    };
+    fetchData();
+  }, []);
   return (
     <div>
       <div className={styles.title}>회원 목록</div>
       <div className={styles.description}>
-        총 <span className={styles.highlight}>3</span>명의 회원이 있습니다.
+        총 <span className={styles.highlight}>{users.length}</span>명의 회원이
+        있습니다.
       </div>
       <table className={`${styles.tableElement} ${styles.table}`}>
         <thead>
@@ -58,18 +58,16 @@ const Member = () => {
           </tr>
         </thead>
         <tbody>
-          {dummyData.map((data) => (
-            <tr key={data.num}>
-              <td className={styles.tableElement}>{data.num}</td>
-              <td className={styles.tableElement}>{data.id}</td>
-              <td className={styles.tableElement}>{data.password}</td>
-              <td className={styles.tableElement}>{data.name}</td>
+          {users.map((data, idx) => (
+            <tr key={data.userId}>
+              <td className={styles.tableElement}>{idx + 1}</td>
+              <td className={styles.tableElement}>{data.email}</td>
+              <td className={styles.tableElement}>{data.userName}</td>
               <td className={styles.tableElement}>{data.role}</td>
-              <td className={styles.tableElement}>{data.date}</td>
               <td className={styles.tableElement}>
                 <button
                   className={`${styles.button} ${styles.updateBtn}`}
-                  onClick={() => handleClickUpdateBtn(data.num)}
+                  onClick={() => handleClickUpdateBtn(data.userId)}
                 >
                   수정
                 </button>
@@ -77,7 +75,7 @@ const Member = () => {
               <td className={styles.tableElement}>
                 <button
                   className={`${styles.button} ${styles.deleteBtn}`}
-                  onClick={() => handleClickDeleteBtn(data.num)}
+                  onClick={() => handleClickDeleteBtn(data.userId)}
                 >
                   삭제
                 </button>
