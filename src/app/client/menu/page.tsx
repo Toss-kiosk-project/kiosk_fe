@@ -1,31 +1,31 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addItem } from "@/redux/orderSlice";
+import style from "./style.module.css";
+
+interface MenuInterface {
+  menuId: string;
+  name: string;
+  category: string;
+  price: number;
+  img: string;
+}
 
 export default function Menu() {
   const categories = ["커피", "논커피", "티/에이드", "푸드"];
-  const menus = [
-    [
-      { name: "아메리카노", price: 1600 },
-      { name: "라떼", price: 3000 },
-    ],
+  const [menus, setMenus] = useState<MenuInterface[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
 
-    [
-      { name: "말차라떼", price: 2000 },
-      { name: "딸기라떼", price: 3000 },
-    ],
-    [
-      { name: "캐모마일티", price: 2000 },
-      { name: "밀크티", price: 3000 },
-    ],
-    [
-      { name: "쿠키", price: 2000 },
-      { name: "샌드위치", price: 3000 },
-    ],
-  ];
-
-  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
+  useEffect(() => {
+    fetch("http://localhost:8080/api/menu/all", { method: "GET" })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res.menuInfo);
+        setMenus(res.menuInfo);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
 
   const dispatch = useDispatch();
   // 메뉴 클릭 시 Redux에 저장
@@ -39,11 +39,11 @@ export default function Menu() {
         {categories.map((category, index) => (
           <div
             key={index}
-            onClick={() => setSelectedCategoryIndex(index)}
+            onClick={() => setSelectedCategory(category)}
             style={{
               cursor: "pointer",
               padding: "0.5rem 0",
-              fontWeight: selectedCategoryIndex === index ? "bold" : "normal",
+              fontWeight: selectedCategory === category ? "bold" : "normal",
             }}
           >
             {category}
@@ -51,13 +51,16 @@ export default function Menu() {
         ))}
       </div>
 
-      <div style={{ width: "75%", padding: "1rem", display: "flex", gap: "2rem" }}>
-        {menus[selectedCategoryIndex].map((menu, idx) => (
-          <div key={idx} onClick={() => handleMenuClick(menu)} style={{ textAlign: "center", cursor: "pointer" }}>
-            <h3>{menu.name}</h3>
-            <p>{menu.price.toLocaleString()}원</p>
-          </div>
-        ))}
+      <div className={style.gridContainer}>
+        {menus
+          .filter((menu) => menu.category === selectedCategory)
+          .map((menu, idx) => (
+            <div key={idx} className={style.card} onClick={() => handleMenuClick(menu)}>
+              <img src={menu.img} alt={menu.name} className={style.cardImage} />
+              <h3 className={style.cardTitle}>{menu.name}</h3>
+              <p className={style.cardPrice}>{menu.price.toLocaleString()}원</p>
+            </div>
+          ))}
       </div>
     </div>
   );

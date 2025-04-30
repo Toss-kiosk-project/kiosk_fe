@@ -93,3 +93,43 @@
 .order_row {
   line-height: 1.4;
 }
+
+/* MenuGrid.module.css */
+
+.gridContainer {
+  width: 75%;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.card {
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  transition: transform 0.15s ease-in-out;
+  width: 80px;
+  height: 120px;
+}
+
+.card:hover {
+  transform: scale(1.03);
+  border-color: #ccc;
+}
+
+.cardImage {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+}
+
+.cardTitle {
+  font-size: 16px;
+}
+
+.cardPrice {
+  font-size: 13px;
+  color: #555;
+}
