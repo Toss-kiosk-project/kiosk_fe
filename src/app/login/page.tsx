@@ -4,11 +4,13 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Logo from "../images/logo.png";
 import Google from "../images/google.png";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function Login() {
   const router = useRouter();
   const handleClientLogin = () => {
-    router.push("/client/menu");
+    signIn("google", { callbackUrl: "/client/menu" });
+    // router.push("/client/menu");
   };
   const handleOtherLogin = () => {
     router.push("/login/other-login");
