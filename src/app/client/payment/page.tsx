@@ -3,13 +3,35 @@ import { useRouter } from "next/navigation";
 import style from "./style.module.css";
 import Image from "next/image";
 import Card from "../../images/card.png";
+import { RootState } from "@/redux/store";
+import { useSelector } from "react-redux";
 
 export default function Payment() {
   const router = useRouter();
+  const orderList = useSelector((state: RootState) => state.order.list);
+  const totalQuantity = orderList.reduce((acc, item) => acc + item.quantity, 0);
+  const totalPrice = orderList.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
   const handleCancel = () => {
     router.push("/client/cart");
   };
   const handleComplete = () => {
+    // redux 데이터 중 totalPrice(총액), menuNum(메뉴 갯수) POST
+    fetch("http://localhost:8080/api/order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        totalPrice: totalPrice,
+        menuNum: totalQuantity,
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
     router.push("/client/complete");
   };
   return (
