@@ -1,10 +1,10 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "../../components/component.module.css";
-import { useParams, useRouter } from "next/navigation";
-import { getDataById, updateProduct } from "../../utils/fetchData";
+import { useRouter } from "next/navigation";
+import { addProduct } from "../../utils/fetchData";
 
-const UpdateProduct = () => {
+const AddProduct = () => {
   const tableHead: {
     head: string;
     isReadOnly: boolean;
@@ -20,8 +20,7 @@ const UpdateProduct = () => {
   const handleClickCancelBtn = () => {
     router.push("/admin");
   };
-  const params = useParams();
-  const id = params.id as string;
+
   const [menuData, setMenuData] = useState({
     name: "",
     img: "",
@@ -29,34 +28,26 @@ const UpdateProduct = () => {
     category: "",
   });
 
-  const handleClickUpdateBtn = async () => {
+  const handleClickAddBtn = async () => {
     const data = {
-      menuId: id,
       name: menuData.name,
       category: menuData.category,
       price: menuData.price,
       img: menuData.img,
     };
-    const res = await updateProduct(data);
 
+    const res = await addProduct(data);
     if (res.isSuccess) {
       alert(res.message);
       router.push("/admin");
     } else {
-      alert("상품수정실패");
+      alert("상품 추가 실패");
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await getDataById("menu", "menuId", id);
-      setMenuData(res.menuInfo);
-    };
-    fetchData();
-  }, []);
   return (
     <div>
-      <div className={styles.title}>상품정보 수정</div>
+      <div className={styles.title}>상품 추가</div>
       <table className={`${styles.tableElement} ${styles.table}`}>
         <tbody>
           {tableHead.map((head) => (
@@ -83,19 +74,19 @@ const UpdateProduct = () => {
       <div className={styles.buttonWrapper}>
         <button
           className={`${styles.button} ${styles.updateBtn}`}
-          onClick={handleClickUpdateBtn}
+          onClick={handleClickAddBtn}
         >
-          수정하기
+          추가하기
         </button>
         <button
           className={`${styles.button} ${styles.deleteBtn}`}
           onClick={handleClickCancelBtn}
         >
-          취소
+          뒤로가기
         </button>
       </div>
     </div>
   );
 };
 
-export default UpdateProduct;
+export default AddProduct;
