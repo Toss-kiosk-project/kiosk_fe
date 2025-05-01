@@ -70,3 +70,41 @@ export const updateProduct = async (bodyData) => {
     console.error(error);
   }
 };
+
+export const updateOrder = async (orderId, state) => {
+  console.log(orderId, state);
+  const orderStateMap = {
+    READY: 0,
+    FINISH: 1,
+    END: 2,
+  };
+  try {
+    const response = await fetch(`${baseURL}/order/state`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ orderId: orderId, state: orderStateMap[state] }),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const addProduct = async (bodyData) => {
+  try {
+    const response = await fetch(`${baseURL}/menu`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(bodyData),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};

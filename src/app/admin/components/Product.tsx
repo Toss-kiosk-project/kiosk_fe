@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./component.module.css";
 import { useRouter } from "next/navigation";
 import { deleteData, getData } from "../utils/fetchData";
+import Image from "next/image";
 
 interface ProductData {
   menuId: string;
@@ -36,7 +37,6 @@ const Product = () => {
         alert("삭제에 실패했습니다.");
       }
     }
-    // console.log(id);
   };
   const router = useRouter();
   const handleClickUpdateBtn = (id: string) => {
@@ -44,6 +44,9 @@ const Product = () => {
   };
 
   const [menus, setMenus] = useState<ProductData[]>([]);
+  const handleClickAddBtn = () => {
+    router.push("/admin/product/add");
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,9 +58,17 @@ const Product = () => {
   return (
     <div>
       <div className={styles.title}>상품 목록</div>
-      <div className={styles.description}>
-        총 <span className={styles.highlight}>{menus.length ?? 0}</span>개의
-        상품이 있습니다.
+      <div className={`${styles.description} ${styles.flex}`}>
+        <div>
+          총 <span className={styles.highlight}>{menus.length ?? 0}</span>개의
+          상품이 있습니다.
+        </div>
+        <button
+          className={`${styles.button} ${styles.addBtn}`}
+          onClick={handleClickAddBtn}
+        >
+          상품 추가
+        </button>
       </div>
       <table className={`${styles.tableElement} ${styles.table}`}>
         <thead>
@@ -74,8 +85,9 @@ const Product = () => {
             <tr key={data.menuId}>
               <td className={styles.tableElement}>{idx + 1}</td>
               <td className={styles.tableElement}>{data.name}</td>
-              {/* <td className={styles.tableElement}>{data.image}</td> */}
-              <td className={styles.tableElement}>이미지</td>
+              <td>
+                <img src={data.img} width={100} alt={data.name} />
+              </td>
               <td className={styles.tableElement}>{data.price}</td>
               <td className={styles.tableElement}>{data.category}</td>
               <td className={styles.tableElement}>

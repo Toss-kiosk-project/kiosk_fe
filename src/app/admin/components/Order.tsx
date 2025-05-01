@@ -1,7 +1,15 @@
 "use client";
+import { getData, updateOrder } from "../utils/fetchData";
 import styles from "./component.module.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
+interface OrderData {
+  orderId: string;
+  code: string;
+  totalPrice: number;
+  state: "READY" | "FINISH" | "END";
+  orderTime: string;
+}
 const Order = () => {
   const tableHead = [
     "번호",
@@ -10,36 +18,42 @@ const Order = () => {
     "주문상태",
     "주문일시",
   ];
+  const orderStateMap = {
+    READY: "준비중",
+    FINISH: "준비완료",
+    END: "수령완료",
+  };
 
-  const dummyData = [
-    {
-      num: 1,
-      orderNum: "01",
-      totalPrice: 10000,
-      status: "준비중",
-      orderTime: "2023-01-01 12:00:00",
-    },
-    {
-      num: 2,
-      orderNum: "02",
-      totalPrice: 20000,
-      status: "준비완료",
-      orderTime: "2023-01-02 14:00:00",
-    },
-  ];
+  const fetchData = async () => {
+    const res = await getData("order");
+    setOrders(res.orderList);
+  };
 
-  const handleChageStatus = (
+  const handleChageStatus = async (
     e: React.ChangeEvent<HTMLSelectElement>,
-    id: number
+    id: string
   ) => {
     const selectedValue = e.target.value;
-    console.log(selectedValue);
+    const res = await updateOrder(id, selectedValue);
+
+    if (res?.isSuccess) {
+      alert("주문상태가 변경되었습니다.");
+      fetchData();
+    } else {
+      alert("주문상태 변경에 실패했습니다.");
+    }
   };
+  const [orders, setOrders] = useState<OrderData[]>([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <div>
       <div className={styles.title}>주문 목록</div>
       <div className={styles.description}>
-        총 <span className={styles.highlight}>3</span>건의 주문이 있습니다.
+        총 <span className={styles.highlight}>{orders.length ?? 0}</span>건의
+        주문이 있습니다.
       </div>
       <table className={`${styles.tableElement} ${styles.table}`}>
         <thead>
@@ -52,19 +66,20 @@ const Order = () => {
           </tr>
         </thead>
         <tbody>
-          {dummyData.map((data) => (
-            <tr key={data.num}>
-              <td className={styles.tableElement}>{data.num}</td>
-              <td className={styles.tableElement}>{data.orderNum}</td>
+          {orders.map((data, idx) => (
+            <tr key={data.orderId}>
+              <td className={styles.tableElement}>{idx + 1}</td>
+              <td className={styles.tableElement}>{data.code}</td>
               <td className={styles.tableElement}>{data.totalPrice}</td>
               <td className={styles.tableElement}>
                 <select
                   className={styles.select}
-                  onChange={(e) => handleChageStatus(e, data.num)}
+                  onChange={(e) => handleChageStatus(e, data.orderId)}
+                  value={data.state}
                 >
-                  <option value="준비중">준비중</option>
-                  <option value="준비완료">준비완료</option>
-                  <option value="수령완료">수령완료</option>
+                  <option value="READY">준비중</option>
+                  <option value="FINISH">준비완료</option>
+                  <option value="END">수령완료</option>
                 </select>
               </td>
               <td className={styles.tableElement}>{data.orderTime}</td>
