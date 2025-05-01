@@ -15,9 +15,9 @@ export default function Payment() {
   const handleCancel = () => {
     router.push("/client/cart");
   };
-  const handleComplete = () => {
+  const handleComplete = async () => {
     // redux 데이터 중 totalPrice(총액), menuNum(메뉴 갯수) POST
-    fetch("http://localhost:8080/api/order", {
+    await fetch("http://localhost:8080/api/order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -28,11 +28,20 @@ export default function Payment() {
       }),
     })
       .then((res) => res.json())
-      .then((res) => {
+      .then(async (res) => {
         console.log(res);
+        const orderId = res.orderId;
+
+        await fetch(`http://localhost:8080/api/order/code?orderId=${orderId}`, {
+          method: "GET",
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            console.log(res.orderCode);
+            router.push(`/client/complete?orderCode=${res.orderCode}`);
+          });
       })
       .catch((error) => console.error("Error fetching data:", error));
-    router.push("/client/complete");
   };
   return (
     <div className={style.wrapper}>

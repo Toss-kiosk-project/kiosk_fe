@@ -3,8 +3,12 @@ import { useRouter } from "next/navigation";
 import style from "./style.module.css";
 import Image from "next/image";
 import Logo from "../../images/dark_logo.png";
+import { useSearchParams } from "next/navigation";
 
 export default function Complete() {
+  const searchParams = useSearchParams();
+  const orderCode = searchParams.get("orderCode");
+
   const router = useRouter();
   const handleClick = () => {
     router.push("/login");
@@ -16,7 +20,7 @@ export default function Complete() {
       <h1>주문 완료!</h1>
 
       <div className={style.complete_wrapper}>
-        <div>고객님의 주문번호는 000번 입니다.</div>
+        <div>고객님의 주문번호는 {orderCode}번 입니다.</div>
         <div>감사합니다.</div>
       </div>
       <div>
