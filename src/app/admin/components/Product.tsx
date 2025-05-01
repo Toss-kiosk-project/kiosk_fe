@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import styles from "./component.module.css";
 import { useRouter } from "next/navigation";
 import { deleteData, getData } from "../utils/fetchData";
-import Image from "next/image";
 
 interface ProductData {
   menuId: string;
@@ -19,20 +18,21 @@ const Product = () => {
     "번호",
     "이름",
     "이미지",
-    "총가격",
+    "가격",
     "카테고리",
     "수정",
     "삭제",
   ];
+  const [menus, setMenus] = useState<ProductData[]>([]);
 
   const handleClickDeleteBtn = async (id: string) => {
-    console.log(id);
     if (confirm("삭제하시겠습니까?")) {
       const res = await deleteData("menu", "menuId", id);
       if (res.isSuccess) {
         alert("삭제되었습니다.");
-        const updatedUsers = await getData("menu");
-        setMenus(updatedUsers.userList);
+        const updatedMenus = await getData("menu");
+        console.log(updatedMenus);
+        setMenus(updatedMenus.menuInfo);
       } else {
         alert("삭제에 실패했습니다.");
       }
@@ -43,7 +43,6 @@ const Product = () => {
     router.push(`/admin/product/${id}`);
   };
 
-  const [menus, setMenus] = useState<ProductData[]>([]);
   const handleClickAddBtn = () => {
     router.push("/admin/product/add");
   };
@@ -85,7 +84,7 @@ const Product = () => {
             <tr key={data.menuId}>
               <td className={styles.tableElement}>{idx + 1}</td>
               <td className={styles.tableElement}>{data.name}</td>
-              <td>
+              <td className={styles.tableElement}>
                 <img src={data.img} width={100} alt={data.name} />
               </td>
               <td className={styles.tableElement}>{data.price}</td>
