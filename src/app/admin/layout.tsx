@@ -56,11 +56,13 @@ export default function RootLayout({
         <>
           <div className={styles.title}>
             키오스크 관리자 화면
-            <button onClick={hanldeClickLogoutBtn}>로그아웃</button>
+            {/* <button onClick={hanldeClickLogoutBtn}>로그아웃</button> */}
           </div>
           <div className={styles.layoutContainer}>
             <Sidebar sideNum={sideNum} setSideNum={setSideNum} />
-            <div className={styles.section}>{renderComponent()}</div>
+            <div className={styles.section}>
+              {pathName === "/admin" ? renderComponent() : children}
+            </div>
           </div>
         </>
       ) : (
