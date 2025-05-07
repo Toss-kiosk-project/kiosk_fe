@@ -15,7 +15,7 @@ interface MenuInterface {
 export default function Menu() {
   const categories = ["커피", "논커피", "티/에이드", "푸드"];
   const [menus, setMenus] = useState<MenuInterface[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("커피");
 
   useEffect(() => {
     fetch("http://localhost:8080/api/menu/all", { method: "GET" })
